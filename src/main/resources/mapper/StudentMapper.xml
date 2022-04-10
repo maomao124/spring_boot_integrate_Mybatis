@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mao.spring_boot_integrate_mybatis.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="mao.spring_boot_integrate_mybatis.data.Student">
+    <id column="student_no" jdbcType="BIGINT" property="studentNo" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="telephone_number" jdbcType="VARCHAR" property="telephoneNumber" />
+    <result column="family_telephone_number" jdbcType="VARCHAR" property="familyTelephoneNumber" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="dormitory_number" jdbcType="VARCHAR" property="dormitoryNumber" />
+    <result column="class_no" jdbcType="BIGINT" property="classNo" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    student_no, name, sex, telephone_number, family_telephone_number, birthday, address, 
+    id_card, email, dormitory_number, class_no, state, remarks
+  </sql>
+  <select id="selectByExample" parameterType="mao.spring_boot_integrate_mybatis.data.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where student_no = #{studentNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from student
+    where student_no = #{studentNo,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="mao.spring_boot_integrate_mybatis.data.StudentExample">
+    delete from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mao.spring_boot_integrate_mybatis.data.Student">
+    insert into student (student_no, name, sex, 
+      telephone_number, family_telephone_number, 
+      birthday, address, id_card, 
+      email, dormitory_number, class_no, 
+      state, remarks)
+    values (#{studentNo,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{telephoneNumber,jdbcType=VARCHAR}, #{familyTelephoneNumber,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{dormitoryNumber,jdbcType=VARCHAR}, #{classNo,jdbcType=BIGINT}, 
+      #{state,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="mao.spring_boot_integrate_mybatis.data.Student">
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        student_no,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="telephoneNumber != null">
+        telephone_number,
+      </if>
+      <if test="familyTelephoneNumber != null">
+        family_telephone_number,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="dormitoryNumber != null">
+        dormitory_number,
+      </if>
+      <if test="classNo != null">
+        class_no,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        #{studentNo,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="telephoneNumber != null">
+        #{telephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="familyTelephoneNumber != null">
+        #{familyTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="dormitoryNumber != null">
+        #{dormitoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="classNo != null">
+        #{classNo,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mao.spring_boot_integrate_mybatis.data.StudentExample" resultType="java.lang.Long">
+    select count(*) from student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update student
+    <set>
+      <if test="row.studentNo != null">
+        student_no = #{row.studentNo,jdbcType=BIGINT},
+      </if>
+      <if test="row.name != null">
+        name = #{row.name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.sex != null">
+        sex = #{row.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="row.telephoneNumber != null">
+        telephone_number = #{row.telephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="row.familyTelephoneNumber != null">
+        family_telephone_number = #{row.familyTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="row.birthday != null">
+        birthday = #{row.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="row.address != null">
+        address = #{row.address,jdbcType=VARCHAR},
+      </if>
+      <if test="row.idCard != null">
+        id_card = #{row.idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="row.email != null">
+        email = #{row.email,jdbcType=VARCHAR},
+      </if>
+      <if test="row.dormitoryNumber != null">
+        dormitory_number = #{row.dormitoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="row.classNo != null">
+        class_no = #{row.classNo,jdbcType=BIGINT},
+      </if>
+      <if test="row.state != null">
+        state = #{row.state,jdbcType=VARCHAR},
+      </if>
+      <if test="row.remarks != null">
+        remarks = #{row.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update student
+    set student_no = #{row.studentNo,jdbcType=BIGINT},
+      name = #{row.name,jdbcType=VARCHAR},
+      sex = #{row.sex,jdbcType=VARCHAR},
+      telephone_number = #{row.telephoneNumber,jdbcType=VARCHAR},
+      family_telephone_number = #{row.familyTelephoneNumber,jdbcType=VARCHAR},
+      birthday = #{row.birthday,jdbcType=VARCHAR},
+      address = #{row.address,jdbcType=VARCHAR},
+      id_card = #{row.idCard,jdbcType=VARCHAR},
+      email = #{row.email,jdbcType=VARCHAR},
+      dormitory_number = #{row.dormitoryNumber,jdbcType=VARCHAR},
+      class_no = #{row.classNo,jdbcType=BIGINT},
+      state = #{row.state,jdbcType=VARCHAR},
+      remarks = #{row.remarks,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mao.spring_boot_integrate_mybatis.data.Student">
+    update student
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="telephoneNumber != null">
+        telephone_number = #{telephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="familyTelephoneNumber != null">
+        family_telephone_number = #{familyTelephoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="dormitoryNumber != null">
+        dormitory_number = #{dormitoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="classNo != null">
+        class_no = #{classNo,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where student_no = #{studentNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mao.spring_boot_integrate_mybatis.data.Student">
+    update student
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      telephone_number = #{telephoneNumber,jdbcType=VARCHAR},
+      family_telephone_number = #{familyTelephoneNumber,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      dormitory_number = #{dormitoryNumber,jdbcType=VARCHAR},
+      class_no = #{classNo,jdbcType=BIGINT},
+      state = #{state,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where student_no = #{studentNo,jdbcType=BIGINT}
+  </update>
+</mapper>

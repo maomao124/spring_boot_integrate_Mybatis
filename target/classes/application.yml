@@ -1,0 +1,19 @@
+spring:
+  # 配置数据源
+  datasource:
+    driver-class-name: ${jdbc.driver}
+    url: ${jdbc.url}
+    username: ${jdbc.username}
+    password: ${jdbc.password}
+
+  # 导入jdbc.properties文件
+  config:
+    import: classpath:jdbc.properties
+
+# mybatis配置
+mybatis:
+  # mybatis 映射文件位置，string数组
+  # mapper-locations: mapper/StudentMapper.xml
+  # mybatis导入配置文件
+  config-location: mybatis-config.xml
+
